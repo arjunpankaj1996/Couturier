@@ -1,0 +1,285 @@
+.bannerSection{
+    background-image: url('../assets/Frame2.png');
+    height:auto;
+    background-size:cover;
+    background-position: top;
+    background-repeat: no-repeat;   
+}
+.customContainer {
+    padding-top:10rem;
+    margin:0px 30px;
+    
+  }
+.bannerText{
+    font-family: var(--primary-font-2);
+    color: var(--primary-color-3);
+    font-size: 16px;
+    letter-spacing: 0.4rem;
+    
+}
+
+.bannerTextMain{
+    font-family: var(--primary-font-1);
+    font-size: 76px;
+    color: var(--primary-color-3);
+    font-weight: 500;
+}
+.bannerCardGrid{
+    margin-top: 15rem;
+}
+.bannerCard{
+    width:fit-content; 
+    margin: auto; 
+    margin-top: 50px;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex; 
+    flex-direction: row; 
+    align-items: flex-start;
+}
+.bannerCardName{
+    font-family: var(--primary-font-1);
+    font-size: 30px;
+    line-height: 2.5rem;
+    color: var(--primary-color-2);
+}
+.productDetailsLanding {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    align-items: flex-start;
+    height: 100%;
+    padding-left: 16px; 
+    gap:10px;
+  }
+.bannerCardPrice{
+    color: var(--primary-color-4);
+    font-family: var(--primary-font-2);
+}
+.shopNowLinkBanner {
+    align-self: flex-start;
+    color: var(--primary-color-5); 
+    margin-top: auto;
+    letter-spacing: 3px;
+}
+.scrollDownLink {
+    display: flex; 
+    justify-content: center;
+    padding: 0px 0px 30px 0px; 
+    font-size: 16px;
+    font-weight: 300; 
+    letter-spacing: 0.25rem;
+    font-family: var(--primary-font-2);
+    color: var(--primary-color-3); 
+    text-decoration: none !important;
+    animation: jumpOnLoad 1.5s infinite; 
+  }
+  @keyframes jumpOnLoad {
+    0%, 100% {
+        transform: translateY(0); 
+    }
+    50% {
+        transform: translateY(-10px); 
+    }
+}
+@media only screen and (max-width: 992px) {
+    .bannerCardGrid{
+        margin-top: 0;
+    }
+    .bannerTextMain {
+        line-height: 4.5rem;
+        font-size: 60px;
+    }
+    .scrollDownLink {
+        margin-top: 30px;
+    }
+}
+
+/*-------------2nd Section----------------*/
+
+.formalSectionGrid .mantine-Grid-col{
+    padding: 0;
+}
+.formalSection1{
+    background-image: url("../assets/FormalMen.png");
+    background-repeat: no-repeat;
+    background-size: contain;   
+}
+.formalBox{
+    overflow: hidden;
+    position: relative;
+}
+.formalText{
+    position: absolute;
+    top: 40%;
+    left:7%;
+    color: var(--primary-color-3);
+    font-family: var(--primary-font-1);
+    font-size: 48px;
+}
+.formalBox .mantine-Image-root{
+    transform: scale(1);
+    transition: 0.3s ease;
+}
+.formalBox .mantine-Image-root:hover{
+    transform: scale(1.1);
+}
+.casualSection{
+    margin-left: 30px;
+}
+@media only screen and (max-width: 992px) {
+.casualSection{
+    margin-left:0;
+    margin-top: 30px;
+}
+.formalText{
+    font-size: 30px;
+}
+}
+
+/*----------- Product Section--------------*/
+
+.productHead{
+    font-family: var(--primary-font-1);
+    font-size: 76px;
+    color: var(--primary-color-2);
+    font-weight: 500;
+    
+}
+.Button{
+   
+    font-family:var(--primary-font-2);
+    border: none;
+    border-radius: 0%;
+    width: 100%;
+    margin-top: 0;
+    height:5vh;
+    color: #fff;
+    background-color:var(--primary-color-1);
+  }
+  .burgerButton:hover{
+    background-color: var(--primary-color-3);
+    color: var(--primary-color-1);
+    transition: 0.3s ease;
+  }
+@media only screen and (max-width: 992px) {
+    .productHead{
+        font-size: 56px;
+        line-height: 4.5rem;
+    }
+    }
+/*------------------Features Section-------------------*/
+
+.featuresBox{
+    border: 25px solid rgb(242, 242, 242);
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
+    padding: 20px;
+    min-height: 100%;
+}
+.featuresBoxCenter{
+    border: 25px solid rgb(242, 242, 242);
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    gap: 10px;
+}
+.featureBoxIcon{
+    background-color: var(--primary-color-1);
+    border-radius: 50%;
+    padding: 12px;
+    min-width: 50px;
+    min-height: 50px;
+    color: #fff;
+    box-sizing: border-box;
+}
+.featureBoxHead{
+    font-family: var(--primary-font-1);
+    font-size: 30px;
+    line-height: 2.5rem;
+    color: var(--primary-color-2);
+}
+.featureBoxText{
+    color:var(--primary-color-4) ;
+    font-family: var(--primary-font-2);
+    font-size: 12px;
+    text-align: justify;
+}
+@media only screen and (max-width: 992px) {
+    .featureContainer .mantine-Grid-col{
+        min-width: 100%;
+    }
+    .featuresBoxCenter{
+        flex-direction: column;
+    }
+}
+/*------------------Carousel Section------------------*/
+.reviewHead{
+    font-family: var(--primary-font-1);
+    font-size: 76px;
+    color: var(--primary-color-2);
+    font-weight: 500;
+}
+.customCarousel {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .customCarousel .mantine-Carousel-indicators {
+    bottom: 30px;
+  }
+  
+  .customCarousel .mantine-Carousel-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    transition:  0.3s ease;
+  }
+  
+  .customCarousel .mantine-Carousel-indicator[data-active] {
+    background-color: var(--primary-color-1);
+  }
+  
+  .customCarousel .mantine-Carousel-controls {
+    color: var(--primary-color-1)
+  }
+  
+  .customCarousel .mantine-Carousel-slide {
+    display: flex;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+  }
+  .carouselCard{
+    min-height: 150px;
+  }
+  .reviewText {
+    font-family: var(--primary-font-2);
+    font-size: 16px;
+    color: var(--primary-color-4);
+    margin-bottom: 10px;
+  }
+  .reviewAuthor {
+    font-family: var(--primary-font-1);
+    font-size: 14px;
+    color: var(--primary-color-2);
+    text-align: right;
+    align-self: flex-end;
+    width: 100%;
+  }
+  .reviewRating {
+    margin: 10px 0;
+    justify-content: center;
+  }
+  @media only screen and (max-width: 992px) {
+    .reviewHead{
+        font-size: 60px;
+        line-height: 4.5rem;
+  }
+}

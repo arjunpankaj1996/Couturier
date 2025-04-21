@@ -1,0 +1,13 @@
+:root{
+    --primary-color-0:#5e2f0d;
+    --primary-color-1:#8B4513;
+    --primary-color-2:#3E3E3E;
+    --primary-color-3:#ffffff;
+    --primary-color-4:#c7b8b0;
+    --primary-color-5:#000000;
+    --primary-color-6:#E90000;
+    --primary-color-7:#B4B4B4;
+
+    --primary-font-1:"Playfair Display", serif;
+    --primary-font-2:"Lato", sans-serif;
+}

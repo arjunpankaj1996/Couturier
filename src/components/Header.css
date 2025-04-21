@@ -1,0 +1,87 @@
+.header{
+    width: 100%;
+    height: 70px;
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+    border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+    backdrop-filter: blur(5px);
+    top: 0;
+    z-index: 1000; 
+}
+.logoText{
+    font-family: var(--primary-font-1);
+    font-size: 30px;
+    font-weight: 500;
+    color: #000;
+}
+
+.headerLink{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+    text-decoration: none !important;
+    color: var(--primary-color-5);
+    font-weight: 500;
+    font-family: var(--primary-font-2);
+    font-size: var(--mantine-font-size-md);
+  }
+  
+  @media (max-width: var(--mantine-breakpoint-sm)) {
+    .headerLink {
+      height: 42px;
+      width: 100%;
+    }
+  }
+  
+  .headerLink:hover {
+    color: var(--primary-color-1);
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  }
+  .headerLinkLanding{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+    text-decoration: none !important;
+    color: var(--primary-color-3);
+    font-weight: 500;
+    font-family: var(--primary-font-2);
+    font-size: var(--mantine-font-size-md);
+  }
+  .headerLinkLanding:hover {
+    color: var(--primary-color-1);
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  }
+  .burgerButton{
+   
+    font-family:var(--primary-font-2);
+    border: none;
+    border-radius: 0%;
+    width: 100%;
+    margin-top: 0;
+    height:5vh;
+    color: #fff;
+    background-color:var(--primary-color-1);
+  }
+  .burgerButton:hover{
+    background-color: var(--primary-color-3);
+    color: var(--primary-color-1);
+    transition: 0.3s ease;
+  }
+.headerLinkDrawer{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: var(--mantine-spacing-xl);
+    padding-right: var(--mantine-spacing-xl);
+    text-decoration: none;
+    color:  var(--primary-color-1);
+    font-weight: 500;
+    font-family: var(--primary-font-2);
+    font-size: var(--mantine-font-size-xl);
+}
+  
+  

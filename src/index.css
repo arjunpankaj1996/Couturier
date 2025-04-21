@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme{
+    --color-primary:#8B4513;
+}
+html {
+    scroll-behavior: smooth;
+  }
+.buttonMain{
+    font-family:var(--primary-font-2);
+    border: none;
+    border-radius: 0%;
+    height:5vh;
+    color: #fff;
+    background-color:var(--primary-color-1)
+}
+.buttonMain:hover{
+    background-color: #5e2f0d;
+    color: var(--primary-color-3);
+    transition: 0.3s ease;
+}

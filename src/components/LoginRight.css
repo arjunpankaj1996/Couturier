@@ -1,0 +1,76 @@
+
+.loginForm{
+    align-items: center;
+    background-color: #fff;
+    height: 100vh;
+    padding: 0px 150px;
+    position: relative;
+}
+.formlog{
+    position: relative;
+    top:10rem;
+}
+.loginForm .mantine-TextInput-input{
+    border: 1px solid var(--primary-color-2);
+    border-radius: 0%;
+    height:3rem;
+    color: var(--primary-color-2);
+    font-family: var(--primary-font-2);
+}
+.loginForm .mantine-TextInput-label{
+    font-family: var(--primary-font-2);
+    color: var(--primary-color-2);
+    margin-bottom: 3px;
+}
+.loginRightText{
+    color:var(--primary-color-2);
+    font-size: 50px;
+    font-family: var(--primary-font-1);
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    margin-bottom: 15px;
+}
+.loginForm .mantine-PasswordInput-input{
+    font-family: var(--primary-font-2); 
+    border: 1px solid var(--primary-color-2);
+    border-radius: 0%;
+    height:3rem;
+    color: var(--primary-color-2);
+}
+.loginForm .mantine-PasswordInput-label{
+    font-family: var(--primary-font-2);
+    color: var(--primary-color-2);
+    margin-bottom: 3px;
+   
+}
+.loginForm .mantine-Button-root{
+    font-family:var(--primary-font-2);
+    border: 2px solid #fff;
+    border-radius: 0%;
+    width: 100%;
+    margin-top: 20px;
+    height: 7vh;
+    background-color:var(--primary-color-1);
+}
+.loginForm .mantine-Button-root:hover{
+    background-color: #fff;
+    border: 2px solid var(--primary-color-1);
+    color: var(--primary-color-1);
+    transition: 0.4s ease;
+}
+.loginForm .mantine-Anchor-root{
+    font-family: var(--primary-font-1);
+    color: var(--primary-color-2);
+    position: relative;
+    top: 11rem;
+}
+.loginForm .mantine-Checkbox-label{
+    color: var(--primary-color-2);
+}
+
+@media only screen and (max-width: 992px) {
+    .loginForm{
+        padding: 0px 50px;
+    }
+}

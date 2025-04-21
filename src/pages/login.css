@@ -1,0 +1,26 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.LoginContainer {
+    padding: 0px;
+    height: 100vh;
+}
+.LoginContainer .mantine-Grid-inner{
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+}
+.LoginContainer .mantine-Grid-col{
+   width: 100%;
+   height: 100vh;
+   padding:0 ;
+}
+
+@media only screen and (max-width: 992px) {
+    .LoginContainer .mantine-Container-root{
+        overflow: visible;
+    }
+}
