@@ -5,6 +5,7 @@ import { LandingPage } from './pages/LandingPage';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
 import MyCart from './pages/MyCart';
+import Checkout from './pages/Checkout';
 
 
 const PrivateRoute = ({ element }) => {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path : '/Productdetails',
     element : <ProductDetails />
+  },
+  {
+    path : '/Checkout',
+    element : <PrivateRoute element={<Checkout />} />
   }
   
 ]);

@@ -6,13 +6,14 @@ import { Container, Flex, Grid , Text , Image, Box , Button , Divider} from '@ma
 import './MyCart.css'
 import { IconTrash ,IconArrowRight} from '@tabler/icons-react'
 import { getUserIdFromToken } from '../utils/userId'
+import { useNavigate } from 'react-router-dom'
 
 
 const MyCart = () => {
   
   const [cartItems , setCartItems] = useState([]);
   const smallScreen = useMediaQuery('(max-width : 992px)');
-
+  const navigate = useNavigate();
   const userId = getUserIdFromToken();
 
   useEffect (() =>{
@@ -27,7 +28,8 @@ const MyCart = () => {
     storedCart[userId] = updatedCart;
     localStorage.setItem('cart' , JSON.stringify(storedCart));
     setCartItems(updatedCart);
-  }
+  };
+  
   const handleDelete = (productId , size) =>{
     const updatedCart = cartItems.filter((item) =>
        !(item.productId === productId && item.size === size )
@@ -43,7 +45,7 @@ const MyCart = () => {
         return item;
       })
       updateLocalStorage(updatedCart)
-  }
+  };
 
   const calculateSubtotal = (cartItems) => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -56,6 +58,7 @@ const MyCart = () => {
   const calculateTotal = (subtotal, gst, deliveryCharge = 30) => {
     return subtotal + gst + deliveryCharge;
   };
+
   return (
     <>
       <Header />
@@ -121,7 +124,7 @@ const MyCart = () => {
                           calculateGST(calculateSubtotal(cartItems))).toFixed(2)}
                   </Text>
                 </Flex>
-                <Button className='buttonCheckout' rightSection={<IconArrowRight stroke={2} />}>PROCEED TO CHECKOUT</Button>
+                <Button className='buttonCheckout'onClick={()=>navigate('/Checkout')} rightSection={<IconArrowRight stroke={2}/>}>PROCEED TO CHECKOUT</Button>
               </Box>
               
             </Grid.Col>
