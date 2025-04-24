@@ -1,27 +1,19 @@
-import React, { useState , useEffect } from 'react'
+import React from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { useMediaQuery } from '@mantine/hooks'
 import { Container, Flex, Grid , Text , Image, Box , Button , Divider} from '@mantine/core'
-import './MyCart.css'
+import './MyCart.css';
+import { useCart } from '../hooks/useCart'
 import { IconTrash ,IconArrowRight} from '@tabler/icons-react'
-import { getUserIdFromToken } from '../utils/userId'
-import { useNavigate } from 'react-router-dom'
 
+import { useNavigate } from 'react-router-dom'
+import { calculateSubtotal , calculateGST , calculateTotal } from '../utils/checkoutCalculations';
 
 const MyCart = () => {
-  
-  const [cartItems , setCartItems] = useState([]);
   const smallScreen = useMediaQuery('(max-width : 992px)');
   const navigate = useNavigate();
-  const userId = getUserIdFromToken();
-
-  useEffect (() =>{
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || {}
-    if (userId && storedCart[userId]){
-      setCartItems(storedCart[userId]);
-    }
-  },[userId]);
+  const { cartItems, userId ,setCartItems} = useCart();
 
   const updateLocalStorage = (updatedCart) =>{
     const storedCart = JSON.parse(localStorage.getItem('cart')) || {}
@@ -47,17 +39,7 @@ const MyCart = () => {
       updateLocalStorage(updatedCart)
   };
 
-  const calculateSubtotal = (cartItems) => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
   
-  const calculateGST = (subtotal) => {
-    return subtotal * 0.12;
-  };
-  
-  const calculateTotal = (subtotal, gst, deliveryCharge = 30) => {
-    return subtotal + gst + deliveryCharge;
-  };
 
   return (
     <>

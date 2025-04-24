@@ -44,7 +44,7 @@ const ProductDetails = () => {
     const cart = JSON.parse(localStorage.getItem('cart')) || {};
     const userCart = cart[userId] || [];
 
-    //Check the product with same size is alreadyy in the cart
+    
 
     const existingItem = userCart.findIndex(
         (item) => item.productId === product.id && item.size === selectedImage.size
