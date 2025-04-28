@@ -3,6 +3,7 @@ import { getUserIdFromToken } from "../utils/userId";
 
 export const useCart = () =>{
     const [cartItems, setCartItems] = useState([]);
+    const [isLoading ,setIsLoading] = useState(true);
     const userId =getUserIdFromToken();
 
     useEffect(() => {
@@ -10,6 +11,15 @@ export const useCart = () =>{
             if (userId && storedCart[userId]) {
                 setCartItems(storedCart[userId]);
             }
+            setIsLoading(false);
         }, [userId]);
-    return {cartItems , userId ,setCartItems};
+    const clearCart = () =>{
+        const storedCart =JSON.parse(localStorage.getItem('cart')) || {};
+        if(userId){
+            delete storedCart[userId];
+            localStorage.setItem('cart', JSON.stringify(storedCart));
+            setCartItems([]);
+        }
+    }
+    return {cartItems , userId ,setCartItems , clearCart , isLoading};
 };

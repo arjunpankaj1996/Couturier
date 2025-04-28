@@ -39,7 +39,6 @@ const MyCart = () => {
       updateLocalStorage(updatedCart)
   };
 
-  
 
   return (
     <>
@@ -84,6 +83,7 @@ const MyCart = () => {
                     )}
             </Grid.Col>
             <Grid.Col span={{xs : 12 , sm : 12 , md : 5 , lg : 5}}>
+            {cartItems.length > 0 && (
               <Box px={30}>
                 <Text className='checkoutHeading'>order summary</Text>
                 <Flex justify='space-between'>
@@ -106,9 +106,9 @@ const MyCart = () => {
                           calculateGST(calculateSubtotal(cartItems))).toFixed(2)}
                   </Text>
                 </Flex>
-                <Button className='buttonCheckout'onClick={()=>navigate('/Checkout')} rightSection={<IconArrowRight stroke={2}/>}>PROCEED TO CHECKOUT</Button>
+                <Button className='buttonCheckout'onClick={()=>{navigate('/Checkout')}} rightSection={<IconArrowRight stroke={2}/>}>PROCEED TO CHECKOUT</Button>
               </Box>
-              
+            )}
             </Grid.Col>
           </Grid>
         </Container>
