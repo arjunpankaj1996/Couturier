@@ -1,0 +1,39 @@
+.successContainer{
+    height: 100vh;
+}
+.successHeading{
+    color: var(--primary-color-5);
+    font-family: var(--primary-font-1);
+    font-size: 30px;
+}
+.successHeading span{
+    color: var(--primary-color-1);
+}
+.successBox{
+    text-align: center;
+}
+.paymentSuccessHeading{
+    font-family: var(--primary-font-1);
+    color: var(--primary-color-2);
+    font-size: 76px;
+}
+.successIcon{
+    color: #00ED5F;
+    height: 80px;
+    width: 80px;
+}
+.paymentSuccessText{
+    font-family: var(--primary-font-2);
+    color: var(--primary-color-7);
+    width:70%;
+    margin: 0 auto;
+}
+@media only screen and (max-width: 992px) {
+    .successBox{
+        margin-top: 30px;
+        padding: 0px;
+    }
+    .paymentSuccessHeading{
+        font-size: 55px;
+    }
+}
