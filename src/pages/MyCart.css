@@ -78,3 +78,8 @@
     color: var(--primary-color-3);
     transition: 0.3s ease;
 }
+@media only screen and (max-width: 992px) {
+    .cartHead{
+        font-size: 55px;
+    }
+}

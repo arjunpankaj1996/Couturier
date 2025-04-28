@@ -1,0 +1,28 @@
+.orderHead{
+    font-family: var(--primary-font-1);
+    font-size: 76px;
+    color: var(--primary-color-2);
+    font-weight: 500;
+}
+.orderHeadingSection{
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);
+    padding: 15px 10px;
+    margin-bottom: 15px;
+}
+.orderSectionOrderId{
+    font-family: var(--primary-font-2);
+    font-weight: 700;
+}
+.orderSectionPaymentId{
+    color: var(--primary-color-4);
+}
+.orderItemName{
+    font-family: var(--primary-font-1);
+    color: var(--primary-color-1);
+    font-size: 26px;
+}
+@media only screen and (max-width: 992px) {
+    .orderHead{
+        font-size: 55px;
+    }
+}

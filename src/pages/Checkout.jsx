@@ -65,7 +65,7 @@ const Checkout = () => {
                     pincode: form.values.pin,
                     paymentid: razorpaypaymentId,
                     product: cartItems,
-                    id: userId,
+                    userid: userId,
                 });
             } else {
                 console.error("Payment ID not returned.");

@@ -53,7 +53,8 @@ export const Header = ({ insideLanding }) => {
                   <IconUserCircle size={34} stroke={1.5} />
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item leftSection={<IconTruckDelivery size={16} stroke={1.5} />}>
+                  <Menu.Item leftSection={<IconTruckDelivery size={16} stroke={1.5} />}
+                  onClick={()=>navigate('/MyOrders')}>
                     My Orders
                   </Menu.Item>
                   <Menu.Item leftSection={<IconShoppingCart size={16} stroke={1.5} />}

@@ -8,6 +8,7 @@ import MyCart from './pages/MyCart';
 import Checkout from './pages/Checkout';
 import PaymentSuccess from './pages/paymentSuccess';
 import ProtectCheckout from './components/protectCheckout';
+import MyOrders from './pages/MyOrders';
 
 const PrivateRoute = ({ element }) => {
   const user = decodeToken(); 
@@ -42,8 +43,11 @@ const router = createBrowserRouter([
   {
     path : '/paymentSuccess',
     element : <PrivateRoute element={<PaymentSuccess />} />
+  },
+  {
+    path : '/MyOrders',
+    element : <PrivateRoute element={<MyOrders />} />
   }
-  
 ]);
 
 export function Router() {
