@@ -29,11 +29,7 @@ export const registerUser =async (userData) =>{
         throw new Error('User already registered')
       }
     const {data : newUser} = await axios.post(API_URL , userData);
-    const token = encodeToken(newUser);
-    localStorage.setItem("token" , token);
-    localStorage.setItem("user" ,JSON.stringify(newUser));
-    console.log(newUser);
-    return {...newUser , token};
+    return {...newUser};
 }
 
 export {logoutUser}
