@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './ProductList.css'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
@@ -12,13 +12,13 @@ import {  useSearchParams } from 'react-router-dom'
 
 const ProductList = () => {
 
-  const { data: products = [], isLoading, isError  } = useProducts();
+  const { data: products, isLoading, isError  } = useProducts();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [openCategory, { toggle: toggle1 }] = useDisclosure(false);
   const [openSize, { toggle: toggle2 }] = useDisclosure(false);
   const [openPrice, { toggle: toggle3 }] = useDisclosure(false);
-
+  const [filterProduct , setFilterProduct] = useState([]);
   const [activePage, setActivePage] = useState(1);
   // const [searchQuery , setSearchQuery] = useState('');
   const itemPerPage = 6;
@@ -40,18 +40,23 @@ const ProductList = () => {
     },
   });
 
+useEffect(()=>{
+  filterFunction(selectedCategory,selectedSize,selectedPrice)
+},[products,searchParams]);
   //Filter products from searchParams
-
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory = selectedCategory.length ? selectedCategory.includes(product.gender) : true;
-    const matchesSize = selectedSize.length ? selectedSize.some(size => product.size?.[size.toLowerCase()] > 0) : true;
-    const matchesPrice = selectedPrice.length ? selectedPrice.some((range) => {
-      const [minPrice, maxPrice] = range.split('-').map((price) => parseInt(price.trim(), 10))
+const filterFunction =  (selectedCategory,selectedSize,selectedPrice)=>{
+  const filteredProducts = products?.filter((product) => {
+    const matchesCategory = selectedCategory?.length ? selectedCategory?.includes(product.gender) : true;
+    const matchesSize = selectedSize?.length ? selectedSize?.some(size => product.size?.[size.toLowerCase()] > 0) : true;
+    const matchesPrice = selectedPrice?.length ? selectedPrice?.some((range) => {
+      const [minPrice, maxPrice] = range?.split('-')?.map((price) => parseInt(price?.trim(), 10))
       return product.price >= minPrice && product.price <= maxPrice }) : true;
     return matchesCategory && matchesSize && matchesPrice;
   });
+  setFilterProduct(filteredProducts)
+}
 
-  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+  const paginatedProducts = filterProduct?.slice(startIndex, endIndex);
   
   const handleApplyFilter = (values) => {
     setSearchParams(values);
@@ -170,7 +175,7 @@ const ProductList = () => {
           <Grid.Col span={{ lg: 9 }} >
             <Grid gutter='xl' columns={12}>
               {paginatedProducts
-                .map((product) => (
+                ?.map((product) => (
                   <Grid.Col key={product.id} span={{ xs: 6, sm: 6, md: 6, lg: 4 }}>
                     <ProductCard
                       id={product.id}
@@ -186,7 +191,7 @@ const ProductList = () => {
           <Flex mt='lg' justify='flex-end' w='100%'>
             <Pagination
               className=''
-              total={Math.ceil(filteredProducts.length / itemPerPage)}
+              total={Math.ceil(filterProduct?.length / itemPerPage)}
               page={activePage}
               onChange={setActivePage}
             />
