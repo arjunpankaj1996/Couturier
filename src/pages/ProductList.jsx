@@ -2,25 +2,29 @@ import React, { useEffect, useState } from 'react'
 import './ProductList.css'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import { Container, Flex, Grid, Text, Pagination, Collapse, Checkbox, Button, TextInput } from '@mantine/core'
+import { Container, Flex, Grid, Text, Pagination, Collapse,Anchor, Checkbox, Button, TextInput , Box } from '@mantine/core'
 import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/ProductCard'
 import { useDisclosure } from '@mantine/hooks'
-import { IconChevronRight, IconSearch } from '@tabler/icons-react';
+import { IconChevronRight, IconSearch ,IconX} from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import {  useSearchParams } from 'react-router-dom'
+import { useMediaQuery } from '@mantine/hooks'
+
 
 const ProductList = () => {
 
   const { data: products, isLoading, isError  } = useProducts();
+  const smallScreen = useMediaQuery('(max-width : 992px)')
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [openCategory, { toggle: toggle1 }] = useDisclosure(false);
   const [openSize, { toggle: toggle2 }] = useDisclosure(false);
   const [openPrice, { toggle: toggle3 }] = useDisclosure(false);
+
   const [filterProduct , setFilterProduct] = useState([]);
   const [activePage, setActivePage] = useState(1);
-  // const [searchQuery , setSearchQuery] = useState('');
+  
   const itemPerPage = 6;
   const startIndex = (activePage - 1) * itemPerPage;
   const endIndex = startIndex + itemPerPage;
@@ -31,27 +35,33 @@ const ProductList = () => {
   const selectedCategory = searchParams.getAll('category') || [];
   const selectedSize = searchParams.getAll('size') || [];
   const selectedPrice = searchParams.getAll('price') || [];
+  const searchQuery = searchParams.get('search') || '';
+
+  const [searchInput , setSearchInput] = useState(searchQuery);
 
   const form = useForm({
     initialValues: {
       category: selectedCategory,
       size: selectedSize,
       price: selectedPrice,
+      search: searchQuery,
     },
   });
 
 useEffect(()=>{
-  filterFunction(selectedCategory,selectedSize,selectedPrice)
+  filterFunction(selectedCategory,selectedSize,selectedPrice,searchQuery)
 },[products,searchParams]);
+
   //Filter products from searchParams
-const filterFunction =  (selectedCategory,selectedSize,selectedPrice)=>{
+const filterFunction =  (selectedCategory,selectedSize,selectedPrice,searchQuery)=>{
   const filteredProducts = products?.filter((product) => {
     const matchesCategory = selectedCategory?.length ? selectedCategory?.includes(product.gender) : true;
     const matchesSize = selectedSize?.length ? selectedSize?.some(size => product.size?.[size.toLowerCase()] > 0) : true;
     const matchesPrice = selectedPrice?.length ? selectedPrice?.some((range) => {
       const [minPrice, maxPrice] = range?.split('-')?.map((price) => parseInt(price?.trim(), 10))
       return product.price >= minPrice && product.price <= maxPrice }) : true;
-    return matchesCategory && matchesSize && matchesPrice;
+    const matchesSearch = searchQuery ? product.name.toLowerCase().includes(searchQuery.toLowerCase()) : true;
+    return matchesCategory && matchesSize && matchesPrice && matchesSearch;
   });
   setFilterProduct(filteredProducts)
 }
@@ -61,11 +71,22 @@ const filterFunction =  (selectedCategory,selectedSize,selectedPrice)=>{
   const handleApplyFilter = (values) => {
     setSearchParams(values);
   }
+
   const handleCancelFilters = () => {
-    setSearchParams({});
+    const updatedParams = new URLSearchParams(searchParams);
+    updatedParams.delete('category');
+    updatedParams.delete('size');
+    updatedParams.delete('price')
+    setSearchParams(updatedParams);
     form.reset();
-    // setSearchQuery('');
   }
+  const handleCancelSearch = ()=>{
+    setSearchInput('')
+    const updatedParams = new URLSearchParams(searchParams);
+    updatedParams.delete('search');
+    setSearchParams(updatedParams);
+  }
+
   if (isLoading) {
     return <Text>Loading products...</Text>;
   }
@@ -78,20 +99,25 @@ const filterFunction =  (selectedCategory,selectedSize,selectedPrice)=>{
   return (
     <>
       <Header />
-      <Container p={60} fluid>
-        <Flex direction='column'>
-          {/* <TextInput 
-            className='productSearch'
-            rightSection={<IconSearch/>}
-            placeholder='Search Products'
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            /> */}
+      <Container p={smallScreen ? 20 : 60} fluid>
+        <Flex justify='space-between' className='productSearch'>
             <Text component='h1' className='productListHead'>ALL PRODUCTS</Text>
+            <Box display='flex' className='productSearchBox'>
+              <TextInput 
+              placeholder='Search Products..'
+              {...form.getInputProps('search')} 
+              value={searchInput}
+              rightSection={searchInput ? <Anchor c='var(--primary-color-7)' 
+                                                  onClick={()=>handleCancelSearch()}><IconX stroke={2} />
+                                                  </Anchor> :''}
+              onChange={(event)=>{setSearchInput(event.target.value)}}
+              /> 
+              <Button onClick={()=>handleApplyFilter({...form.values , search : searchInput})}><IconSearch /></Button>
+            </Box>
         </Flex>
         <Grid columns={12}>
           <Grid.Col span={{ xs: 12, sm: 12, md: 3, lg: 3 }}>
-            <form onSubmit={form.onSubmit((values) => handleApplyFilter(values))}>
+            <form onSubmit={form.onSubmit(() => handleApplyFilter({...form.values , search : searchInput}))}>
               <Flex w='100%'
                 justify='space-between'
                 onClick={toggle1}
@@ -204,3 +230,4 @@ const filterFunction =  (selectedCategory,selectedSize,selectedPrice)=>{
 }
 
 export default ProductList
+
