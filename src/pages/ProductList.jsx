@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import './ProductList.css'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import { Container, Flex, Grid, Text, Pagination, Collapse, Checkbox, Button, TextInput , Box } from '@mantine/core'
+import { Container, Flex, Grid, Text, Pagination, Collapse,Anchor, Checkbox, Button, TextInput , Box } from '@mantine/core'
 import { useProducts } from '../hooks/useProducts'
 import { ProductCard } from '../components/ProductCard'
 import { useDisclosure } from '@mantine/hooks'
-import { IconChevronRight, IconSearch } from '@tabler/icons-react';
+import { IconChevronRight, IconSearch ,IconX} from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import {  useSearchParams } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks'
+
 
 const ProductList = () => {
 
@@ -23,7 +24,6 @@ const ProductList = () => {
 
   const [filterProduct , setFilterProduct] = useState([]);
   const [activePage, setActivePage] = useState(1);
-  
   
   const itemPerPage = 6;
   const startIndex = (activePage - 1) * itemPerPage;
@@ -44,6 +44,7 @@ const ProductList = () => {
       category: selectedCategory,
       size: selectedSize,
       price: selectedPrice,
+      search: searchQuery,
     },
   });
 
@@ -72,22 +73,20 @@ const filterFunction =  (selectedCategory,selectedSize,selectedPrice,searchQuery
   }
 
   const handleCancelFilters = () => {
-    setSearchParams({});
+    const updatedParams = new URLSearchParams(searchParams);
+    updatedParams.delete('category');
+    updatedParams.delete('size');
+    updatedParams.delete('price')
+    setSearchParams(updatedParams);
     form.reset();
+  }
+  const handleCancelSearch = ()=>{
+    setSearchInput('')
+    const updatedParams = new URLSearchParams(searchParams);
+    updatedParams.delete('search');
+    setSearchParams(updatedParams);
   }
 
-  const handleSearch =()=>{
-    searchParams.delete('category');
-    searchParams.delete('size');
-    searchParams.delete('price');
-    form.reset();
-  if (searchInput) {
-    searchParams.set('search', searchInput);
-  } else {
-    searchParams.delete('search');
-  }
-  setSearchParams(searchParams);
-  }
   if (isLoading) {
     return <Text>Loading products...</Text>;
   }
@@ -106,15 +105,19 @@ const filterFunction =  (selectedCategory,selectedSize,selectedPrice,searchQuery
             <Box display='flex' className='productSearchBox'>
               <TextInput 
               placeholder='Search Products..'
+              {...form.getInputProps('search')} 
               value={searchInput}
-              onChange={(e) => {setSearchInput(e.currentTarget.value)}}
+              rightSection={searchInput ? <Anchor c='var(--primary-color-7)' 
+                                                  onClick={()=>handleCancelSearch()}><IconX stroke={2} />
+                                                  </Anchor> :''}
+              onChange={(event)=>{setSearchInput(event.target.value)}}
               /> 
-              <Button onClick={() => handleSearch()}><IconSearch /></Button>
+              <Button onClick={()=>handleApplyFilter({...form.values , search : searchInput})}><IconSearch /></Button>
             </Box>
         </Flex>
         <Grid columns={12}>
           <Grid.Col span={{ xs: 12, sm: 12, md: 3, lg: 3 }}>
-            <form onSubmit={form.onSubmit((values) => handleApplyFilter(values))}>
+            <form onSubmit={form.onSubmit(() => handleApplyFilter({...form.values , search : searchInput}))}>
               <Flex w='100%'
                 justify='space-between'
                 onClick={toggle1}
