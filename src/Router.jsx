@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider ,Navigate} from 'react-router-dom';
-import { LoginPage } from './pages/Login';
-import { decodeToken } from './utils/jwtService';
+import { LoginPage } from './pages/Login';4
 import { LandingPage } from './pages/LandingPage';
+import { decodeToken } from './utils/jwtService';
 import ProductList from './pages/ProductList';
 import ProductDetails from './pages/ProductDetails';
 import MyCart from './pages/MyCart';

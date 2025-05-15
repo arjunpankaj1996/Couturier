@@ -7,22 +7,34 @@ import {
   Menu
 } from "@mantine/core"
 import { IconShoppingCart, IconUserCircle, IconLogout, IconTruckDelivery } from '@tabler/icons-react';
-import { useLogout } from '../hooks/useAuth';
 import { useDisclosure } from '@mantine/hooks';
 import { useNavigate } from 'react-router-dom';
+import { logoutUser } from '../utils/jwtService';
+import { useState ,useEffect } from 'react';
+import { loginUser } from '../api/authApi';
+
 
 export const Header = ({ insideLanding }) => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+  const [loggin , setLoggin] = useState(false)
   const navigate = useNavigate();
-  const logout = useLogout();
+  const{token} = loginUser();
 
-  const isLoggedIn = !!localStorage.getItem('token');
+    useEffect(() => {
+      const isLoggedIn = !!localStorage.getItem('token');
+      setLoggin(isLoggedIn);
+    }, [token]);
+    
+  
 
+  // console.log(isLoggedIn,"isLoggedin")
+  // console.log(localStorage.getItem("token"),"token")
+ 
   const handleLoginClick = () => {
     navigate('/login')
   }
   const handleLogout = () => {
-    logout();
+    logoutUser();
     navigate('/');
   };
   const menuItems = [
@@ -45,7 +57,7 @@ export const Header = ({ insideLanding }) => {
           </Group>
           <Flex visibleFrom='sm' gap='lg' align='center'>
 
-            {isLoggedIn ? (
+            {loggin ? (
               <Menu
                 width={300}
                 position='bottom'>
@@ -97,7 +109,7 @@ export const Header = ({ insideLanding }) => {
           ))}
           <Divider my="sm" />
           <Group justify="center" pb="xl" px="md">
-            {isLoggedIn ? (
+            {loggin ? (
               <Menu
                 width={300}
                 position='bottom' zIndex={99999}>
