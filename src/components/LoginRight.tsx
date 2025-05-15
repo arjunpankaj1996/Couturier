@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLogin, useRegister} from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import './LoginRight.css'
 import {
@@ -14,14 +14,14 @@ import {
 import { useToggle } from '@mantine/hooks';
 import { useForm } from '@mantine/form'
 import { IconMail, IconLock, IconUser } from '@tabler/icons-react';
-import { encodeToken } from '../utils/jwtService';
+import {  LoginFormValues , RegisterFormValue } from '../interface/loginInterface';
 
 const LoginRight = () => {
-  const [type, toggle] = useToggle(['login', 'register']);
-  const loginMutation = useLogin();
-  const registrationMutation = useRegister();
+  const [type, toggle] = useToggle(['login', 'register'] as const);
+  const  {login , register  , user} = useAuth()
   const navigate = useNavigate();
-  const loginForm = useForm({
+  
+  const loginForm = useForm<LoginFormValues>({
     initialValues: {
       email: '',
       password: '',
@@ -31,7 +31,7 @@ const LoginRight = () => {
       password: (val) => (val.length < 6 ? 'Password should include at least 6 characters' : null),
     }
   });
-  const registerForm = useForm({
+  const registerForm = useForm<RegisterFormValue>({
     initialValues: {
       name: '',
       email: '',
@@ -48,26 +48,16 @@ const LoginRight = () => {
     }
   });
 
-  const handleLogin = async (values) => {
-    loginMutation.mutate(values , {
-      onSuccess :(user) =>{
-        const token = encodeToken(user);
-        localStorage.setItem("token" ,token);
-        navigate('/' ,{replace : true})
-      }
-    });
-    
+  const handleLogin = async (values : LoginFormValues ) => {
+    login(values.email , values.password)
+    navigate('/');
   };
 
-  const handleRegistration = async (values) => {
-    registrationMutation.mutate(values , {
-      onSuccess: () => {
+  const handleRegistration = async (values : RegisterFormValue) => {
+        register(values.email , values.name , values.password , values.terms);
         registerForm.reset();
         toggle();
-      } 
-    });
-  }
-  
+    };
 
   return (
 
