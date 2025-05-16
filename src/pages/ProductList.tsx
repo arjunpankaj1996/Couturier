@@ -10,11 +10,12 @@ import { IconChevronRight, IconSearch ,IconX} from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import {  useSearchParams } from 'react-router-dom'
 import { useMediaQuery } from '@mantine/hooks'
-
+import { product } from '../interface/productlistinterface'
+import { filterValues , selectfilerValues } from '../interface/productlistinterface'
 
 const ProductList = () => {
 
-  const { data: products, isLoading, isError  } = useProducts();
+  const { item : products, loading : isLoading, error : isError  } = useProducts();
   const smallScreen = useMediaQuery('(max-width : 992px)')
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -22,8 +23,8 @@ const ProductList = () => {
   const [openSize, { toggle: toggle2 }] = useDisclosure(false);
   const [openPrice, { toggle: toggle3 }] = useDisclosure(false);
 
-  const [filterProduct , setFilterProduct] = useState([]);
-  const [activePage, setActivePage] = useState(1);
+  const [filterProduct , setFilterProduct] = useState<product[]>([]);
+  const [activePage, setActivePage] = useState<number>(1);
   
   const itemPerPage = 6;
   const startIndex = (activePage - 1) * itemPerPage;
@@ -37,9 +38,9 @@ const ProductList = () => {
   const selectedPrice = searchParams.getAll('price') || [];
   const searchQuery = searchParams.get('search') || '';
 
-  const [searchInput , setSearchInput] = useState(searchQuery);
+  const [searchInput , setSearchInput] = useState<string>(searchQuery);
 
-  const form = useForm({
+  const form = useForm<filterValues>({
     initialValues: {
       category: selectedCategory,
       size: selectedSize,
@@ -49,11 +50,11 @@ const ProductList = () => {
   });
 
 useEffect(()=>{
-  filterFunction(selectedCategory,selectedSize,selectedPrice,searchQuery)
+  filterFunction({selectedCategory,selectedSize,selectedPrice,searchQuery})
 },[products,searchParams]);
 
   //Filter products from searchParams
-const filterFunction =  (selectedCategory,selectedSize,selectedPrice,searchQuery)=>{
+const filterFunction  =  ({selectedCategory,selectedSize,selectedPrice,searchQuery}: selectfilerValues)=>{
   const filteredProducts = products?.filter((product) => {
     const matchesCategory = selectedCategory?.length ? selectedCategory?.includes(product.gender) : true;
     const matchesSize = selectedSize?.length ? selectedSize?.some(size => product.size?.[size.toLowerCase()] > 0) : true;
@@ -98,7 +99,7 @@ const filterFunction =  (selectedCategory,selectedSize,selectedPrice,searchQuery
 
   return (
     <>
-      <Header />
+      <Header insideLanding={false}/>
       <Container p={smallScreen ? 20 : 60} fluid>
         <Flex justify='space-between' className='productSearch'>
             <Text component='h1' className='productListHead'>ALL PRODUCTS</Text>
@@ -218,7 +219,7 @@ const filterFunction =  (selectedCategory,selectedSize,selectedPrice,searchQuery
             <Pagination
               className=''
               total={Math.ceil(filterProduct?.length / itemPerPage)}
-              page={activePage}
+              value={activePage}
               onChange={setActivePage}
             />
           </Flex>
