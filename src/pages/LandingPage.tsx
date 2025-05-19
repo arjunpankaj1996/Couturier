@@ -15,9 +15,15 @@ import { ProductCard } from '../components/ProductCard';
 import { useProducts } from '../hooks/useProducts';
 import { useReviewsQuery } from '../hooks/useReviewsQuery';
 
+interface Review {
+            id: number;
+            name: string;
+            details: string;
+            rating: number;
+          }
 
 export const LandingPage = () => {
-const { data : products = [] , isLoading , isError } = useProducts();  
+const { item : products, loading : isLoading, error : isError  } = useProducts(); 
 const { data : reviews = [] } = useReviewsQuery();
 
 if (isLoading) {
@@ -72,16 +78,14 @@ if (isError) {
                       h={200}
                       w="auto"
                       src={bannerCardImg}
-                      sx={(theme) => ({
-                        marginLeft: theme.breakpoints.md ? 0 : 17,
-                      })} />
+                       />
                   </Card.Section>
                 </Group>
               </Card>
             </Grid.Col>
           </Grid>
           <Anchor className='scrollDownLink'onClick={()=>{
-            document.getElementById("secondSection").scrollIntoView({behavior:"smooth"})
+            document.getElementById("secondSection")?.scrollIntoView({behavior:"smooth"})
           }}>SCROLL DOWN<IconChevronsDown /></Anchor>
         </Container>
       </div>
@@ -207,10 +211,6 @@ if (isError) {
           className="customCarousel"
           slideSize="33.33%"
           slidesToScroll={1}
-          breakpoints={[
-            { maxWidth: 'xs', slideSize: '100%', slidesToScroll: 1 }, 
-            { maxWidth: 'md', slideSize: '33.33%', slidesToScroll: 1 }, 
-          ]}
           slideGap="md"
           align="center"
           loop
@@ -218,21 +218,22 @@ if (isError) {
           withIndicators
           
         >
+          
           {reviews
-          .filter((review) => review.rating > 4 )
-          .map((review) => (
-            <Carousel.Slide key={review.id}>
-              <Card className='carouselCard' shadow="sm" padding="lg" radius="md" withBorder>
-                <Text className="reviewText">
-                  "{review.details}"
-                </Text>
-                <Rating value={review.rating} readOnly size="md" className='reviewRating' />
-                <Text className="reviewAuthor" weight={500}>
-                  - {review.name}
-                </Text>
-              </Card>
-            </Carousel.Slide>
-          ))}
+            .filter((review: Review) => review.rating > 4 )
+            .map((review: Review) => (
+              <Carousel.Slide key={review.id}>
+                <Card className='carouselCard' shadow="sm" padding="lg" radius="md" withBorder>
+                  <Text className="reviewText">
+                    "{review.details}"
+                  </Text>
+                  <Rating value={review.rating} readOnly size="md" className='reviewRating' />
+                  <Text className="reviewAuthor" w={500}>
+                    - {review.name}
+                  </Text>
+                </Card>
+              </Carousel.Slide>
+            ))}
         </Carousel>
       </Container>
       <Footer />

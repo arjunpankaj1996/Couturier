@@ -20,6 +20,7 @@ export interface LoginParams {
   password: string;
 }
 export interface RegisterParams {
+  id : number;
   name: string;
   email: string;
   password: string;
